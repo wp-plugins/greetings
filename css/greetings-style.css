@@ -1,0 +1,27 @@
+.greetings{
+
+}
+
+.greeting{
+  border-bottom: 1px dotted;
+  padding-bottom: 10px;
+}
+
+.not_last_greeting{
+  padding-top: 10px;
+}
+
+
+.greeting_sender_name{
+  font-weight: bold;
+}
+
+.greeting_date{
+  font-size: smaller;
+}
+
+.greeting_text{
+  margin-top: 5px;
+  text-align: justify;
+}
+
