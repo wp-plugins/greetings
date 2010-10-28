@@ -12,10 +12,10 @@ Any occasion to receive greetings? So, this plugin is just for you!
 
 Any occasion to receive greetings? So, this plugin is just for you! This Widget plugin shows a greeting image which would be uploaded for the occasion and a pop up form for receiving the greetings. It is possible to show the greetings in any post or page.
 
-In administrator panel you can do the following:
+= In administrator panel you can do the following: =
 1. Configure options.
-1. Approve, unapprove and delete the greetings.
-1. Upload the images, one of which will be shown random by widget.
+2. Approve, unapprove and delete the greetings.
+3. Upload the images, one of which will be shown random by widget.
 
 I wish you to have many occasions to recieve greetings!!!
 
