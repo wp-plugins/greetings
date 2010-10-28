@@ -1,9 +1,9 @@
 === Greetings===
-Contributors: Ruben Sargsyan
+Contributors: s_ruben
 Donate link: http://rubensargsyan.com/donate/
-Tags: greetings, congratulations, occasion, widget, ajax, occasion
+Tags: greetings, congratulations, occasion, widget, AJAX, occasion
 Requires at least: 2.8
-Tested up to: 2.9
+Tested up to: 3.0.1
 Stable tag: 1.0
 
 Any occasion to receive greetings? So, this plugin is just for you!
@@ -14,10 +14,12 @@ Any occasion to receive greetings? So, this plugin is just for you! This Widget 
 
 In administrator panel you can do the following:
 1. Configure options.
-2. Approve, unapprove and delete the greetings.
-3. Upload the images, one of which will be shown random by widget.
+1. Approve, unapprove and delete the greetings.
+1. Upload the images, one of which will be shown random by widget.
 
 I wish you to have many occasions to recieve greetings!!!
+
+[Plugin Homepage](http://rubensargsyan.com/wordpress-plugin-greetings)
 
 == Installation ==
 
@@ -25,6 +27,10 @@ I wish you to have many occasions to recieve greetings!!!
 2. Activate the plugin through the Plugins menu in WordPress.
 3. Go to the "Appearance"->"Widgets" panel and drag-and-drop the "Greetings" box into your sidebar, configure options and save.
 4. To view the greetings write the tag [greetings] in a post or page.
+
+== Frequently Asked Questions ==
+
+For questions contact with the plugin author - [Ruben Sargsyan](http://rubensargsyan.com/contact).
 
 == Screenshots ==
 
