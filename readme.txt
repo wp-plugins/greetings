@@ -1,4 +1,4 @@
-=== Greetings===
+=== Greetings ===
 Contributors: s_ruben
 Donate link: http://rubensargsyan.com/donate/
 Tags: greetings, congratulations, occasion, widget, AJAX, occasion
