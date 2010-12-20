@@ -4,7 +4,7 @@ Donate link: http://rubensargsyan.com/donate/
 Tags: greetings, congratulations, occasion, widget, AJAX, occasion
 Requires at least: 2.8
 Tested up to: 3.0.3
-Stable tag: 1.1
+Stable tag: trunk
 
 Any occasion to receive greetings? So, this plugin is just for you!
 

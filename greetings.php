@@ -4,7 +4,7 @@ Plugin Name: Greetings
 Plugin URI: http://rubensargsyan.com/wordpress-plugin-greetings/
 Description: Any occasion to receive greetings? So, this plugin is just for you! <a href="admin.php?page=greetings.php">Settings</a>
 Version: 1.1
-Author: Ruben Sargsyan
+Author: s_ruben
 Author URI: http://rubensargsyan.com/
 */
 
