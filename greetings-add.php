@@ -1,4 +1,4 @@
-<?php   
+<?php
 $path  = '';
 
 if(!defined('WP_LOAD_PATH')){
@@ -36,8 +36,9 @@ $greeting = $_POST["greeting"];
 $greeting_captcha = $_POST["captcha"];
 $greeting_added_date = time();
 
-function is_valid_email($email) {
-  if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$", $email)) {
+function is_valid_email($email){
+
+  if(!preg_match("/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i",$email)){
     return false;
   }
   return true;
@@ -60,7 +61,7 @@ function add_greeting($name,$email,$greeting,$captcha,$date){
         return "Email Error";
     }
 
-    if($greeting=="" || $greeting=="Text"){
+    if($greeting=="" || $greeting=="Greeting"){
         return "Greeting Error";
     }
 
@@ -77,7 +78,7 @@ function add_greeting($name,$email,$greeting,$captcha,$date){
     $add_greeting_status = add_greeting($greeting_sender_name,$greeting_sender_email,$greeting,$greeting_captcha,$greeting_added_date);
 
     if($add_greeting_status===true){
-        echo("Your greeting has added. It will be shown after approval. Thank You.");
+        echo("Your greeting has added. Thank You.");
     }elseif($add_greeting_status=="Name Error"){
         echo("Please enter your name.");
     }elseif($add_greeting_status=="Email Error"){

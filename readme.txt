@@ -3,8 +3,8 @@ Contributors: s_ruben
 Donate link: http://rubensargsyan.com/donate/
 Tags: greetings, congratulations, occasion, widget, AJAX, occasion
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 1.0
+Tested up to: 3.0.3
+Stable tag: trunk
 
 Any occasion to receive greetings? So, this plugin is just for you!
 
@@ -41,6 +41,10 @@ For questions contact with the plugin author - [Ruben Sargsyan](http://rubensarg
 5. Edit Images
 
 == Changelog ==
+
+= 1.1 =
+* Changed some deprecated functions.
+* Now the avatars of the greetings authors can be shown.
 
 = 1.0 =
 * First release.

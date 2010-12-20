@@ -3,7 +3,7 @@
 Plugin Name: Greetings
 Plugin URI: http://rubensargsyan.com/wordpress-plugin-greetings/
 Description: Any occasion to receive greetings? So, this plugin is just for you! <a href="admin.php?page=greetings.php">Settings</a>
-Version: 1.0
+Version: 1.1
 Author: Ruben Sargsyan
 Author URI: http://rubensargsyan.com/
 */
@@ -28,14 +28,14 @@ $greetings_plugin_url = WP_PLUGIN_URL.'/'.str_replace(basename(__FILE__),"",plug
 $greetings_plugin_title = "Greetings";
 $greetings_plugin_prefix = "greetings_";
 $greetings_table_name = $wpdb->prefix."greetings";
-$greetings_version = "1.0";
+$greetings_version = "1.1";
 
 function install_greetings(){
 	global $wpdb;
     $greetings_plugin_title = "Greetings";
     $greetings_table_name = $wpdb->prefix."greetings";
     $greetings_plugin_prefix = "greetings_";
-    $greetings_version = "1.0";
+    $greetings_version = "1.1";
 
 	$charset_collate = '';
 	if($wpdb->supports_collation()) {
@@ -66,12 +66,17 @@ function install_greetings(){
     $greetings_widget_options = array("title"=>$greetings_plugin_title);
 
     add_option($greetings_plugin_prefix."widget_options",$greetings_widget_options);
-    add_option($greetings_plugin_prefix."version",$greetings_version);
+
+    if(get_option($greetings_plugin_prefix."version")===false){
+        add_option($greetings_plugin_prefix."version",$greetings_version);
+    }elseif(get_option($greetings_plugin_prefix."version")<$greetings_version){
+        update_option($greetings_plugin_prefix."version",$greetings_version);
+    }
 }
 
 function greetings_menu(){
     if(get_not_approved_greetings_count()>0){
-        $not_approved_greetings_count = '<span class="update-plugins count-'.get_not_approved_greetings_count().'>"><span class="plugin-count">'.get_not_approved_greetings_count().'</span></span>';
+        $not_approved_greetings_count = "<span class='update-plugins count-".get_not_approved_greetings_count()."'><span class='plugin-count'>".get_not_approved_greetings_count()."</span></span>";
     }else{
         $not_approved_greetings_count = '';
     }
@@ -91,8 +96,9 @@ function set_greetings_default_options(){
     global $greetings_plugin_prefix;
 
     $greetings_only_logged = "No";
+    $greetings_show_avatar = "No";
 
-    $greetings_options = array("only_logged"=>$greetings_only_logged);
+    $greetings_options = array("only_logged"=>$greetings_only_logged,"show_avatar"=>$greetings_show_avatar);
 
     add_option($greetings_plugin_prefix."options",$greetings_options);
 }
@@ -126,7 +132,13 @@ function greetings_options(){
                 $greetings_only_logged = "No";
             }
 
-            $greetings_options = array("only_logged"=>$greetings_only_logged);
+            if($_POST[$greetings_plugin_prefix."show_avatar"]){
+                $greetings_show_avatar = "Yes";
+            }else{
+                $greetings_show_avatar = "No";
+            }
+
+            $greetings_options = array("only_logged"=>$greetings_only_logged,"show_avatar"=>$greetings_show_avatar);
 
             foreach($greetings_options as $greetings_option => $greetings_option_value){
                 if(empty($greetings_option_value)){
@@ -160,6 +172,12 @@ function greetings_options(){
             <td width="85%">
                 <input name="<?php echo($greetings_plugin_prefix); ?>only_logged" id="<?php echo($greetings_plugin_prefix); ?>only_logged" type="checkbox" <?php if($greetings_options["only_logged"]=="Yes"){ echo('checked="checked"'); } ?> />
                 <small>Users must be registered and logged in to send a greeting.</small></td>
+          </tr>
+          <tr>
+            <td width="15%" valign="middle"><strong>Show Avatar</strong></td>
+            <td width="85%">
+                <input name="<?php echo($greetings_plugin_prefix); ?>show_avatar" id="<?php echo($greetings_plugin_prefix); ?>show_avatar" type="checkbox" <?php if($greetings_options["show_avatar"]=="Yes"){ echo('checked="checked"'); } ?> />
+            </td>
           </tr>
         </table>
         <p class="submit">
@@ -230,10 +248,10 @@ function greetings_widget(){
       <div style="font-size: 16px; font-weight: bold; text-align: center">Add Greeting</div>
       <div style="margin-top: 5px">All fields are required.</div>
       <div>
-          <div style="margin-top: 5px"><input type="text" name="greeting_sender_name" id="greeting_sender_name" style="width: 290px" value="Name" onfocus="if(this.value=='Name'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Name'; }"></div>
-          <div style="margin-top: 5px"><input type="text" name="greeting_sender_email" id="greeting_sender_email" style="width: 290px" value="Email (will not be published)" onfocus="if(this.value=='Email (will not be published)'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Email (will not be published)'; }"></div>
-          <div style="margin-top: 5px"><textarea name="greeting_text" id="greeting_text" style="width: 290px; height: 100px; overflow: auto" onfocus="if(this.value=='Text'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Text'; }">Text</textarea></div>
-          <div style="margin-top: 5px"><img id="greeting_captcha_image" style="vertical-align: middle" src="<?php echo($greetings_plugin_url); ?>captcha/captcha_image.php" alt="Security Code"> <input type="text" name="greeting_captcha" id="greeting_captcha" maxlength="15" style="width: 100px; vertical-align: middle" value="Security Code" onfocus="if(this.value=='Security Code'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Security Code'; }"></div>
+          <div style="margin-top: 5px"><input type="text" name="greeting_sender_name" id="greeting_sender_name" style="width: 290px; background-color: #ffffff; color: #000000; border: 1px solid #000000" value="Name" onfocus="if(this.value=='Name'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Name'; }"></div>
+          <div style="margin-top: 5px"><input type="text" name="greeting_sender_email" id="greeting_sender_email" style="width: 290px; background-color: #ffffff; color: #000000; border: 1px solid #000000" value="Email (will not be published)" onfocus="if(this.value=='Email (will not be published)'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Email (will not be published)'; }"></div>
+          <div style="margin-top: 5px"><textarea name="greeting_text" id="greeting_text" style="width: 290px; height: 100px; overflow: auto; background-color: #ffffff; color: #000000; border: 1px solid #000000" onfocus="if(this.value=='Greeting'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Greeting'; }">Greeting</textarea></div>
+          <div style="margin-top: 5px"><img id="greeting_captcha_image" style="vertical-align: middle" src="<?php echo($greetings_plugin_url); ?>captcha/captcha_image.php" alt="Security Code"> <input type="text" name="greeting_captcha" id="greeting_captcha" maxlength="15" style="width: 100px; vertical-align: middle; background-color: #ffffff; color: #000000; border: 1px solid #000000" value="Security Code" onfocus="if(this.value=='Security Code'){ this.value = ''; }" onblur="if(this.value==''){ this.value = 'Security Code'; }"></div>
           <div style="margin-top: 5px"><button id="add_greetings_button" onclick="add_greetings();">Add</button><img src="<?php echo($greetings_plugin_url); ?>javascript/loading.gif" id="greetings_add_loading" style="display: none"></div>
       </div>
       <div style="text-align: center; margin-top: 5px"><button onclick="hide_add_greetings_panel();">Close</button></div>
@@ -280,7 +298,7 @@ function greetings_init(){
     session_start();
   }
 
-  register_sidebar_widget($greetings_plugin_title, 'greetings_widget');
+  wp_register_sidebar_widget("greetings",$greetings_plugin_title, 'greetings_widget');
   register_widget_control($greetings_plugin_title, 'greetings_widget_options');
 }
 
@@ -382,17 +400,13 @@ function delete_greeting_image($selected_greeting_image){
     return false;
 }
 
-function greetings_headers(){
-  global $greetings_plugin_url, $greetings_plugin_prefix;
-  ?>
-  <link rel="stylesheet" href="<?php echo($greetings_plugin_url); ?>css/greetings-style.css" type="text/css" />
-  <script src="<?php echo($greetings_plugin_url.'javascript/greetings-javascripts.php?greetings_plugin_url='.$greetings_plugin_url); ?>" type="text/javascript"></script>
-  <?php
-}
+wp_enqueue_style('greetings', $greetings_plugin_url.'css/greetings-style.css');
+wp_enqueue_script('greetings', $greetings_plugin_url.'javascript/greetings-javascripts.php?greetings_plugin_url='.$greetings_plugin_url);
 
 add_filter('the_content', 'display_greetings');
 
 function display_greetings($content){
+  $greetings_options = get_greetings_options();
   $greetings = get_greetings();
 
   $greetings_content = '<div class="greetings">';
@@ -408,7 +422,11 @@ function display_greetings($content){
       $is_first = "not_last_greeting";
     }
 
-    $greetings_content .= '<div class="greeting '.$is_first.'"><div><span class="greeting_sender_name">'.$greetings[$i]["name"].'</span> says:</div><div class="greeting_date">'.date(get_option("date_format").", ".get_option("time_format"),$greetings[$i]['date']).'</div><div class="greeting_text">'.convert_smilies($greetings[$i]["greeting"]).'</div></div>';
+    $greetings_content .= '<div class="greeting '.$is_first.'"><div>';
+    if($greetings_options["show_avatar"]=="Yes"){
+        $greetings_content .= get_avatar($greetings[$i]["email"],32).' ';
+    }
+    $greetings_content .= '<span class="greeting_sender_name">'.$greetings[$i]["name"].'</span> says:</div><div class="greeting_date">'.date(get_option("date_format").", ".get_option("time_format"),$greetings[$i]['date']).'</div><div class="greeting_text">'.convert_smilies($greetings[$i]["greeting"]).'</div></div>';
   }
 
   $greetings_content .= "</div>";
@@ -420,6 +438,5 @@ function display_greetings($content){
 
 register_activation_hook(__FILE__,'install_greetings');
 add_action('admin_menu', 'greetings_menu');
-add_action('wp_head', 'greetings_headers');
 add_action("plugins_loaded", "greetings_init");
 ?>

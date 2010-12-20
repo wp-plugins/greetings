@@ -50,11 +50,11 @@ function processRequestChange() {
         document.getElementById("greetings_add_loading").style.display = "none";
         document.getElementById("add_greetings_button").style.display = "";
 
-        if(request.responseText=="Your greeting has added. It will be shown after approval. Thank You."){
+        if(request.responseText=="Your greeting has added. Thank You."){
           hide_add_greetings_panel();
           document.getElementById("greeting_sender_name").value = "Name";
           document.getElementById("greeting_sender_email").value = "Email (will not be published)";
-          document.getElementById("greeting_text").value = "Text";
+          document.getElementById("greeting_text").value = "Greeting";
           document.getElementById("greeting_captcha_image").src = "<?php echo($greetings_plugin_url); ?>captcha/captcha_image.php?"+Math.random();
           document.getElementById("greeting_captcha").value = "Security Code";
         }
